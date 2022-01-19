@@ -1,1 +1,27 @@
-# Example preprocessing script.
+# The first preprocessing script.
+
+
+#De-duplication of data
+applicationCheckpoints = unique(application_checkpoints)
+gpuNew = unique(gpu)
+x_y_New = unique(task_x_y)
+
+
+# Create a new data frame to compute the task runtimes.
+# change time to hms format
+
+applicationCheckpoints[,"timestamp"] = hms(substr(applicationCheckpoints$timestamp,12,23))
+# We need eventName eventType timestamp 
+
+# install.packages("hms")
+# library(hms)
+
+Durations = applicationCheckpoints %>%
+  pivot_wider( 
+    names_from = eventType,
+    values_from = timestamp
+  )
+# Create a new feature called duration.
+Durations[,"duration"] = as.duration(Durations$STOP - Durations$START)
+Durations
+
