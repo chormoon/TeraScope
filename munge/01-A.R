@@ -1,16 +1,17 @@
 # The first preprocessing script.
-
+.packages(all.available=T)
 
 #De-duplication of data
 applicationCheckpoints = unique(application_checkpoints)
 gpuNew = unique(gpu)
 x_y_New = unique(task_x_y)
 
+lhms <- lubridate::hms
 
 # Create a new data frame to compute the task runtimes.
 # change time to hms format
 
-applicationCheckpoints[,"timestamp"] = hms(substr(applicationCheckpoints$timestamp,12,23))
+applicationCheckpoints[,"timestamp"] = lhms(substr(applicationCheckpoints$timestamp,12,23))
 # We need eventName eventType timestamp 
 
 # install.packages("hms")
@@ -22,6 +23,7 @@ Durations = applicationCheckpoints %>%
     values_from = timestamp
   )
 # Create a new feature called duration.
+library(lubridate)
 Durations[,"duration"] = as.duration(Durations$STOP - Durations$START)
 Durations
 
@@ -40,3 +42,4 @@ DurationsNew = DurationsNew%>%
     
   )
 DurationsNew
+
