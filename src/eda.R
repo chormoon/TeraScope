@@ -1,4 +1,6 @@
 library('ProjectTemplate')
+library(hms)
+library(dplyr)
 load.project()
 
 # Pre analysis
@@ -12,7 +14,7 @@ setequal(unique(application_checkpoints$hostname),unique(gpu$hostname))
 # So the hostname are indeed the same
 
 
-# Which event types dominate task runtimes?
+# Q1: Which event types dominate task runtimes?
 head(DurationsNew,1)
 Total_Tiling_time = sum(DurationsNew$Tiling)
 Total_Saving_time = sum(DurationsNew$`Saving Config`)
@@ -27,3 +29,15 @@ barplot(height = y_duration,
         col = 'orange',
         border = '#ffffff')
 # It is obviously render dominate task runtimes
+
+
+
+
+# Q2: What is the interplay between GPU temperature and performance?
+attach(gpu_Q2) #set the dataset
+plot(gpuTempC, powerDrawWatt , main="Temp and Power", 
+     xlab="GPU Temp", ylab="GPU Power ", pch=19) #绘图
+# Add fit lines
+
+abline(lm(powerDrawWatt~gpuTempC), col="red") # 添加拟合线，这里lm()是一个线性回归函数
+lines(lowess(gpuTempC,powerDrawWatt), col="blue") # LOWESS（局部加权散点图平滑化）
