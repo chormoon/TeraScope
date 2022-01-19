@@ -30,7 +30,7 @@ c_card
 c_card_host = cbind(c_hostname,c_card)
 c_card_host
 host_card = left_join(as.data.frame(Total_Render_time_avg_host),as.data.frame(c_card_host))
-host_card = 
-
-
+host_card = desc(host_card,host_card$Total_Render_time_avg)
+host_card = host_card[1:10,]
+host_card
 

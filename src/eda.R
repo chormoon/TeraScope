@@ -35,7 +35,6 @@ barplot(height = y_duration,
 
 
 # Q2: What is the interplay between GPU temperature and performance?
-library(ggplot2)
 # power and temp
 p01=ggplot(
        data=data_power_temp, # set data
