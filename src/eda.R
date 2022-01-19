@@ -1,6 +1,7 @@
 library('ProjectTemplate')
 library(hms)
 library(dplyr)
+library(tidyr)
 load.project()
 
 # Pre analysis
@@ -34,10 +35,39 @@ barplot(height = y_duration,
 
 
 # Q2: What is the interplay between GPU temperature and performance?
-attach(gpu_Q2) #set the dataset
-plot(gpuTempC, powerDrawWatt , main="Temp and Power", 
-     xlab="GPU Temp", ylab="GPU Power ", pch=19) #绘图
-# Add fit lines
+library(ggplot2)
+# power and temp
+p01=ggplot(
+       data=data_power_temp, # set data
+       mapping=aes( 
+             x=c_temp, 
+             y=power_avg,
+             color= power_avg
+         )
+   )
+p01+geom_point()+theme_bw()+geom_smooth(method="lm",colour= "orange" )+scale_color_gradient(low = "pink", high = "red")
 
-abline(lm(powerDrawWatt~gpuTempC), col="red") # 添加拟合线，这里lm()是一个线性回归函数
-lines(lowess(gpuTempC,powerDrawWatt), col="blue") # LOWESS（局部加权散点图平滑化）
+# gpuUtilPerc and temp
+p02=ggplot(
+  data=data_gpuUtilPerc_temp, # set data
+  mapping=aes( 
+    x=c_temp, 
+    y=gpuUtilPerc_avg,
+    color=gpuUtilPerc_avg
+  )
+)
+p02+geom_point()+theme_bw()+geom_smooth(method="lm",colour= "orange" )+scale_color_gradient(low = "pink", high = "red")
+
+# gpuMemUtilPerc and temp
+p03=ggplot(
+  data=data_gpuMemUtilPerc_temp, # set data
+  mapping=aes( 
+    x=c_temp, 
+    y=gpuMemUtilPerc_avg,
+    color=gpuMemUtilPerc_avg
+  )
+)
+p03+geom_point()+theme_bw()+geom_smooth(method="lm",colour= "orange" )+scale_color_gradient(low = "pink", high = "red")
+# So the GPU temperature is proportional to performance 
+
+
