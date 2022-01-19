@@ -108,4 +108,20 @@ p04+geom_point()+theme_bw()+geom_smooth(method="lm",colour= "orange" )+scale_col
 
 
 
-# Q4: Can we identify particular GPU cards (based on their serial numbers) whose performance differs to other cards? (i.e. perpetually slow cards).
+# Q4: Can we identify particular GPU cards (based on their serial numbers) whose performance differs to other cards?(i.e. perpetually slow cards).
+# 1. check the hostname for each gpu card
+length(unique(gpuNew$hostname))
+length(unique(gpuNew$gpuSerial))
+# maybe one gpu one hostname?
+head(gpuNew)
+check_gpu_host = c()
+for(i in c_hostname){
+  check_gpu_host = c(check_gpu_host, unique(gpuNew[which(gpuNew$hostname == i),"gpuSerial"]))
+}
+length(check_gpu_host)
+check_gpu_host
+# it is obviously each hostname is a gpu card
+host_card
+ggplot(host_card, aes(y=Total_Render_time_avg, x=c_card, fill =  c_card))+
+  geom_boxplot() + ggtitle("Event Names Run Time")+
+  theme(plot.title = element_text(hjust = 0.5))
