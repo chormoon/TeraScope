@@ -25,3 +25,18 @@ Durations = applicationCheckpoints %>%
 Durations[,"duration"] = as.duration(Durations$STOP - Durations$START)
 Durations
 
+#We do not need the start and stop now
+DurationsNew = Durations[,-5]
+DurationsNew = DurationsNew[,-5]
+DurationsNew
+
+#Create new col for task name and value for duration.
+DurationsNew = DurationsNew%>%
+  pivot_wider(
+    # Create new columns based on values of eventName
+    names_from = eventName,
+    # Fill the duration for each event name
+    values_from = duration
+    
+  )
+DurationsNew
