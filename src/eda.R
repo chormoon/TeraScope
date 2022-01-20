@@ -2,6 +2,7 @@ library('ProjectTemplate')
 library(hms)
 library(dplyr)
 library(tidyr)
+library(ggplot2)
 load.project()
 
 # Pre analysis
@@ -122,5 +123,8 @@ check_gpu_host
 # it is obviously each hostname is a gpu card
 host_card
 ggplot(host_card, aes(y=Total_Render_time_avg, x=c_card, fill =  c_card))+
-  geom_boxplot() + ggtitle("Event Names Run Time")+
-  theme(plot.title = element_text(hjust = 0.5))
+  geom_boxplot() + ggtitle("Event Names Run Time")+scale_x_discrete(guide = guide_axis(n.dodge=3))
+  theme(plot.title = element_text(hjust = 0.05))
+  
+  
+# Q5: What can we learn about the efficiency of the task scheduling process?
