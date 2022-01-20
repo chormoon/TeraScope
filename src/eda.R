@@ -128,3 +128,6 @@ ggplot(host_card, aes(y=Total_Render_time_avg, x=c_card, fill =  c_card))+
   
   
 # Q5: What can we learn about the efficiency of the task scheduling process?
+# It is about the amount of idle time between tasks
+  head(efficiency,10)
+  
