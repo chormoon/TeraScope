@@ -66,4 +66,94 @@ head(efficiency)
 
 
 ## **Data Analysis**
-#### 
+#### For the first question, I use a bar chart to display the running time for each event. It is obviously render dominate task runtimes
+```{r echo=FALSE}
+# Q1: Which event types dominate task runtimes?
+head(DurationsNew,1)
+Total_Tiling_time = sum(DurationsNew$Tiling)
+Total_Saving_time = sum(DurationsNew$`Saving Config`)
+Total_Render_time = sum(DurationsNew$Render)
+Total_Uploading_time = sum(DurationsNew$Uploading)
+# Set the x_axis and y_axis.
+y_duration = c(Total_Tiling_time,Total_Render_time,Total_Saving_time,Total_Uploading_time)
+x_duration = c('Total_Tiling_time','Total_Render_time','Total_Saving_time','Total_Uploading_time')
+# plot the bar chart
+barplot(height = y_duration,
+        names.arg = x_duration,
+        col = 'orange',
+        border = '#ffffff')
+# It is obviously render dominate task runtimes
+```
+#### For the second question, I use three scatter plots to display the relation ship between these variables and a fit line to make the relationship more visible. So the GPU temperature is proportional to performance.
+```{r echo=FALSE}
+
+# Q2: What is the interplay between GPU temperature and performance?
+# power and temp
+p01=ggplot(
+       data=data_power_temp, # set data
+       mapping=aes( 
+             x=c_temp, 
+             y=power_avg,
+             color= power_avg
+         )
+   )
+p01+geom_point()+theme_bw()+geom_smooth(method="lm",colour= "orange" )+scale_color_gradient(low = "pink", high = "red")
+```
+```{r echo=FALSE}
+# gpuUtilPerc and temp
+p02=ggplot(
+  data=data_gpuUtilPerc_temp, # set data
+  mapping=aes( 
+    x=c_temp, 
+    y=gpuUtilPerc_avg,
+    color=gpuUtilPerc_avg
+  )
+)
+p02+geom_point()+theme_bw()+geom_smooth(method="lm",colour= "orange" )+scale_color_gradient(low = "pink", high = "red")
+```
+
+```{r echo=FALSE}
+# gpuMemUtilPerc and temp
+p03=ggplot(
+  data=data_gpuMemUtilPerc_temp, # set data
+  mapping=aes( 
+    x=c_temp, 
+    y=gpuMemUtilPerc_avg,
+    color=gpuMemUtilPerc_avg
+  )
+)
+p03+geom_point()+theme_bw()+geom_smooth(method="lm",colour= "orange" )+scale_color_gradient(low = "pink", high = "red")
+# So the GPU temperature is proportional to performance 
+```
+
+#### For the third question.  I decide to use the hostname as a distinction and compute the avg of the power and render.It also use a scatter plot to display the relationship. It seems that increased power draw means to a longer render.
+```{r echo=FALSE}
+p04=ggplot(
+  data=avg_power_render, # set data
+  mapping=aes( 
+    x=avg_power_list, 
+    y=as.numeric(avg_render_list),
+    color=as.numeric(avg_render_list)
+  )
+)
+p04+geom_point()+theme_bw()+geom_smooth(method="lm",colour= "orange" )+scale_color_gradient(low = "pink", high = "red")
+```
+#### For the forth question, I first check the hostname for each gpu card, otherwise I can not connect the two data frame and so that I can not find out the question. Luckily I managed to find it. Then we can plot the box plot. Here I list the slowest 10 gpu cards.
+```{r echo=FALSE}
+ggplot(host_card, aes(y=Total_Render_time_avg, x=c_card, fill =  c_card))+
+  geom_boxplot() + ggtitle("Event Names Run Time")+scale_x_discrete(guide = guide_axis(n.dodge=3))+
+  theme(plot.title = element_text(hjust = 0.05))
+```
+#### The last question. It is about the amount of idle time between tasks. So I calculate the running time and render time for each GPU card and list them. Then I divide the total run time by the render time, got the efficiency('efficiency_duration' bellow).
+```{r echo=FALSE}
+ head(efficiency,10)
+```
+
+
+# **Conclusion**
+#### Based on the analysis above, we got the ansewers for these questions. It is obviously that the render task  dominate task runtimes and the higher the GPU temperature, the better the performance. The increased power draw symbolizes a longger render time. It is easy for us to identify particular GPU cards by comparing their performance and it is possible for us to calculate the efficiency of each gpu and manage them.
+
+# **Personal Reflections**
+#### Undertaking this project has increased my knowledge and develop my skills regarding an area in which I have a special interest. It also develop my skills regarding report writing.
+#### During the work, once again I am familiar with the skills of using the R language. And when I get a fit for a bunch of unfamiliar data, I can get to grips with how to analyze them faster. At the same time, this time I also learned to operate on time data, and to link multiple data through a field.
+
