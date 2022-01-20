@@ -19,7 +19,7 @@ for(i in c_temp){
 # length(power_avg)
 data_power_temp = cbind(c_temp,power_avg)
 data_power_temp = as.data.frame(data_power_temp)
-
+cache('data_power_temp')
 # 2. temp and gpuUtilperc
 gpuUtilPerc_avg = c()
 for(i in c_temp){
@@ -31,7 +31,7 @@ for(i in c_temp){
 data_gpuUtilPerc_temp = cbind(c_temp,gpuUtilPerc_avg)
 data_gpuUtilPerc_temp = as.data.frame(data_gpuUtilPerc_temp)
 # data_gpuUtilPerc_temp
-
+cache('data_gpuUtilPerc_temp')
 
 
 # 3. temp and gpuMemUtilPerc
@@ -45,3 +45,4 @@ for(i in c_temp){
 data_gpuMemUtilPerc_temp = cbind(c_temp,gpuMemUtilPerc_avg)
 data_gpuMemUtilPerc_temp = as.data.frame(data_gpuMemUtilPerc_temp)
 # data_gpuMemUtilPerc_temp
+cache('data_gpuMemUtilPerc_temp')

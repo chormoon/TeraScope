@@ -14,7 +14,7 @@ for(i in c_hostname){
 avg_render_list
 avg_host_render = cbind(c_hostname,avg_render_list)
 avg_host_render
-
+cache('avg_host_render')
 
 #2. calculate the avg power for each hostname
 c_hostname = unique(gpuNew$hostname)
@@ -27,7 +27,8 @@ for(i in c_hostname){
 avg_power_list
 avg_host_power = cbind(c_hostname,avg_power_list)
 avg_host_power
-
+cache('avg_host_power')
 avg_power_render = left_join(as.data.frame(avg_host_render),as.data.frame(avg_host_power))
 avg_power_render[,"avg_power_list"] = as.numeric(avg_power_render[,"avg_power_list"])
 avg_power_render = arrange(avg_power_render,avg_power_render$avg_power_list)
+cache('avg_power_render')

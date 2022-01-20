@@ -19,7 +19,7 @@ for(i in c_hostname){
 Total_Render_time_avg_host = cbind(c_hostname,Total_Render_time_avg)
 Total_Render_time_avg
 Total_Render_time_avg_host
-
+cache('Total_Render_time_avg_host')
 # draw the card for each host
 head(gpuNew)
 c_card = c()
@@ -33,4 +33,4 @@ host_card = left_join(as.data.frame(Total_Render_time_avg_host),as.data.frame(c_
 host_card = arrange(host_card,desc(host_card$Total_Render_time_avg))
 host_card = host_card[1:10,]
 host_card
-
+cache('host_card')

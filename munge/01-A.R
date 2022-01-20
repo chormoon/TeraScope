@@ -42,4 +42,4 @@ DurationsNew = DurationsNew%>%
     
   )
 DurationsNew
-
+cache('DurationsNew')
