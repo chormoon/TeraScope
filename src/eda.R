@@ -3,7 +3,7 @@ library(hms)
 library(dplyr)
 library(tidyr)
 library(ggplot2)
-load.project()
+#load.project()
 
 # Pre analysis
 # Count the hostname for each data set

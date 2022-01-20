@@ -1,0 +1,52 @@
+---
+title: "Structured Abstract"
+author: "Yang Cong"
+date: "2022/1/20"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir= normalizePath('..'))
+knitr::opts_chunk$set(fig.align = "center")
+```
+
+```{r load, include=FALSE}
+# Source the code from analysis script in src folder
+ library('ProjectTemplate')
+ library(hms)
+ library(dplyr)
+ library(tidyr)
+ library(ggplot2)
+ load.project()
+ source("src/eda.R")
+```
+# **Context**
+#### The dataset given is created from application checkpoint and system metric output from the production of a terapixel image. By analysing it we can have a better understanding of the server so that we can improve it in details in the future.
+
+# **Objective**
+####  The project need us to analyse the data to evaluate the perfpormance of Terapixel rendering in Cloud (Super)computing. In this project I studied the relationship between the various data and evaluated the performance and efficiency of each cpu.
+
+# **Method**
+#### I focus entirely on the EDA process. I use R to clean, organize and analyze this data, use templates to ensure that the project can be reused, and use git for version control.
+
+# **Results**
+#### I managed to discover the connection between the sets of data, understand the relationship between efficiency and performance, and give a way to identify the efficiency of a particular gpu. For example, find the event dominates task runtimes.
+```{r echo=FALSE}
+barplot(height = y_duration,
+        names.arg = x_duration,
+        col = 'orange',
+        border = '#ffffff')
+```
+#### And list the slowest GPU.
+```{r echo=FALSE}
+ggplot(host_card, aes(y=Total_Render_time_avg, x=c_card, fill =  c_card))+
+  geom_boxplot() + ggtitle("Event Names Run Time")+scale_x_discrete(guide = guide_axis(n.dodge=3))+
+  theme(plot.title = element_text(hjust = 0.05))
+```
+# **Novelty**
+#### Unlike some of my previous predecessors' work results, I only focused on the EDA process. This may not be comprehensive, but it is possible to get a proper understanding of it.
